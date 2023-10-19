@@ -250,6 +250,61 @@ async function run() {
       const result = await intelCollection.deleteOne(query);
       res.send(result);
     });
+
+    //Samsung product CRUD Operation
+    app.get("/samsung", async (req, res) => {
+      const cursor = samsungCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/samsung/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await samsungCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post("/samsung", async (req, res) => {
+      const newSamsung = req.body;
+      console.log(newSamsung);
+
+      const result = await samsungCollection.insertOne(newSamsung);
+
+      res.send(result);
+    });
+
+    app.put("/samsung/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedSamsung = req.body;
+      const samsung = {
+        $set: {
+          name: updatedSamsung.name,
+          quantity: updatedSamsung.quantity,
+          supplier: updatedSamsung.supplier,
+          taste: updatedSamsung.taste,
+          category: updatedSamsung.category,
+          details: updatedSamsung.details,
+          photo: updatedSamsung.photo,
+        },
+      };
+
+      const result = await samsungCollection.updateOne(
+        filter,
+        samsung,
+        options
+      );
+      res.send(result);
+    });
+
+    app.delete("/samsung/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await samsungCollection.deleteOne(query);
+      res.send(result);
+    });
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
