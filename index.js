@@ -199,6 +199,57 @@ async function run() {
       const result = await appleCollection.deleteOne(query);
       res.send(result);
     });
+
+    //intel product CRUD Operation
+    app.get("/intel", async (req, res) => {
+      const cursor = intelCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/intel/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await intelCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post("/intel", async (req, res) => {
+      const newIntel = req.body;
+      console.log(newIntel);
+
+      const result = await intelCollection.insertOne(newIntel);
+
+      res.send(result);
+    });
+
+    app.put("/intel/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedIntel = req.body;
+      const intel = {
+        $set: {
+          name: updatedIntel.name,
+          quantity: updatedIntel.quantity,
+          supplier: updatedIntel.supplier,
+          taste: updatedIntel.taste,
+          category: updatedIntel.category,
+          details: updatedIntel.details,
+          photo: updatedIntel.photo,
+        },
+      };
+
+      const result = await intelCollection.updateOne(filter, intel, options);
+      res.send(result);
+    });
+
+    app.delete("/intel/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await intelCollection.deleteOne(query);
+      res.send(result);
+    });
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
