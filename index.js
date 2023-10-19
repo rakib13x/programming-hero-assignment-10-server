@@ -27,19 +27,27 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
+
+    //amd Database
     const amdDatabase = client.db("amdDb");
     const amdCollection = amdDatabase.collection("amd");
+    //google Database
     const googleDatabase = client.db("googleDb");
     const googleCollection = googleDatabase.collection("google");
+    //apple Database
     const appleDatabase = client.db("appleDb");
     const appleCollection = appleDatabase.collection("apple");
+    //intel Database
     const intelDatabase = client.db("intelDb");
     const intelCollection = intelDatabase.collection("intel");
+    //samsung Database
     const samsungDatabase = client.db("samsungDb");
     const samsungCollection = samsungDatabase.collection("samsung");
+    //sony Database
     const sonyDatabase = client.db("sonyDb");
     const sonyCollection = sonyDatabase.collection("sony");
 
+    //amd product CRUD Operation
     app.get("/amd", async (req, res) => {
       const cursor = amdCollection.find();
       const result = await cursor.toArray();
@@ -88,6 +96,8 @@ async function run() {
       const result = await amdCollection.deleteOne(query);
       res.send(result);
     });
+
+    //google product CRUD Operation
     app.get("/google", async (req, res) => {
       const cursor = googleCollection.find();
       const result = await cursor.toArray();
@@ -135,6 +145,58 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await googleCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    //apple product CRUD Operation
+
+    app.get("/apple", async (req, res) => {
+      const cursor = appleCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/apple/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await appleCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post("/apple", async (req, res) => {
+      const newApple = req.body;
+      console.log(newApple);
+
+      const result = await appleCollection.insertOne(newApple);
+
+      res.send(result);
+    });
+
+    app.put("/apple/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedApple = req.body;
+      const apple = {
+        $set: {
+          name: updatedApple.name,
+          quantity: updatedApple.quantity,
+          supplier: updatedApple.supplier,
+          taste: updatedApple.taste,
+          category: updatedApple.category,
+          details: updatedApple.details,
+          photo: updatedApple.photo,
+        },
+      };
+
+      const result = await appleCollection.updateOne(filter, apple, options);
+      res.send(result);
+    });
+
+    app.delete("/apple/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await appleCollection.deleteOne(query);
       res.send(result);
     });
     await client.db("admin").command({ ping: 1 });
