@@ -305,6 +305,57 @@ async function run() {
       const result = await samsungCollection.deleteOne(query);
       res.send(result);
     });
+
+    //Sony product CRUD Operation
+    app.get("/sony", async (req, res) => {
+      const cursor = sonyCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/sony/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await sonyCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post("/sony", async (req, res) => {
+      const newSony = req.body;
+      console.log(newSony);
+
+      const result = await sonyCollection.insertOne(newSony);
+
+      res.send(result);
+    });
+
+    app.put("/sony/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedSony = req.body;
+      const sony = {
+        $set: {
+          name: updatedSony.name,
+          quantity: updatedSony.quantity,
+          supplier: updatedSony.supplier,
+          taste: updatedSony.taste,
+          category: updatedSony.category,
+          details: updatedSony.details,
+          photo: updatedSony.photo,
+        },
+      };
+
+      const result = await sonyCollection.updateOne(filter, sony, options);
+      res.send(result);
+    });
+
+    app.delete("/sony/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await sonyCollection.deleteOne(query);
+      res.send(result);
+    });
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
