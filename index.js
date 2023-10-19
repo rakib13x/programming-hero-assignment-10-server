@@ -52,7 +52,6 @@ async function run() {
       const result = await amdCollection.findOne(query);
       res.send(result);
     });
-
     app.post("/amd", async (req, res) => {
       const newAmd = req.body;
       console.log(newAmd);
@@ -89,7 +88,55 @@ async function run() {
       const result = await amdCollection.deleteOne(query);
       res.send(result);
     });
+    app.get("/google", async (req, res) => {
+      const cursor = googleCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
+    app.get("/google/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await googleCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.post("/google", async (req, res) => {
+      const newGoogle = req.body;
+      console.log(newGoogle);
+
+      const result = await googleCollection.insertOne(newGoogle);
+
+      res.send(result);
+    });
+
+    app.put("/google/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedGoogle = req.body;
+      const google = {
+        $set: {
+          name: updatedGoogle.name,
+          quantity: updatedGoogle.quantity,
+          supplier: updatedGoogle.supplier,
+          taste: updatedGoogle.taste,
+          category: updatedGoogle.category,
+          details: updatedGoogle.details,
+          photo: updatedGoogle.photo,
+        },
+      };
+
+      const result = await googleCollection.updateOne(filter, google, options);
+      res.send(result);
+    });
+
+    app.delete("/google/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await googleCollection.deleteOne(query);
+      res.send(result);
+    });
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
