@@ -46,6 +46,9 @@ async function run() {
     //sony Database
     const sonyDatabase = client.db("sonyDb");
     const sonyCollection = sonyDatabase.collection("sony");
+    //mycart Database
+    const myCartDatabase = client.db("myCartDb");
+    const myCartCollection = myCartDatabase.collection("myCart");
 
     //amd product CRUD Operation
     app.get("/amd", async (req, res) => {
@@ -68,7 +71,6 @@ async function run() {
 
       res.send(result);
     });
-
     app.put("/amd/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -96,7 +98,60 @@ async function run() {
       const result = await amdCollection.deleteOne(query);
       res.send(result);
     });
+    //cart
+    app.get("/myCart", async (req, res) => {
+      const cursor = myCartCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
+    app.post("/myCart", async (req, res) => {
+      const product = req.body;
+      console.log(product);
+
+      if (product.type === "amd") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else if (product.type === "apple") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else if (product.type === "google") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else if (product.type === "intel") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else if (product.type === "samsung") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else if (product.type === "sony") {
+        const result = await myCartCollection.insertOne(product);
+        res.send(result);
+      } else {
+        res.status(400).send("Invalid request");
+      }
+    });
+    app.delete("/myCart/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("Received DELETE request for id:", id);
+
+      try {
+        console.log("Received ID:", id);
+
+        const result = await myCartCollection.deleteOne({ _id: id });
+
+        console.log("Delete result:", result);
+
+        if (result.deletedCount === 0) {
+          return res.status(404).send("Item not found");
+        }
+
+        res.send(result);
+      } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).send("Error deleting item.");
+      }
+    });
     //google product CRUD Operation
     app.get("/google", async (req, res) => {
       const cursor = googleCollection.find();
