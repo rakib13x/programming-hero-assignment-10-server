@@ -79,12 +79,12 @@ async function run() {
       const amd = {
         $set: {
           name: updatedAmd.name,
-          quantity: updatedAmd.quantity,
-          supplier: updatedAmd.supplier,
-          taste: updatedAmd.taste,
-          category: updatedAmd.category,
-          details: updatedAmd.details,
-          photo: updatedAmd.photo,
+          image: updatedAmd.image,
+          brand: updatedAmd.brand,
+          category: updatedAmd.type,
+          details: updatedAmd.price,
+          photo: updatedAmd.description,
+          rating: updatedAmd.rating,
         },
       };
 
@@ -183,12 +183,12 @@ async function run() {
       const google = {
         $set: {
           name: updatedGoogle.name,
-          quantity: updatedGoogle.quantity,
-          supplier: updatedGoogle.supplier,
-          taste: updatedGoogle.taste,
-          category: updatedGoogle.category,
-          details: updatedGoogle.details,
-          photo: updatedGoogle.photo,
+          image: updatedGoogle.image,
+          brand: updatedGoogle.brand,
+          category: updatedGoogle.type,
+          details: updatedGoogle.price,
+          photo: updatedGoogle.description,
+          rating: updatedGoogle.rating,
         },
       };
 
@@ -235,12 +235,12 @@ async function run() {
       const apple = {
         $set: {
           name: updatedApple.name,
-          quantity: updatedApple.quantity,
-          supplier: updatedApple.supplier,
-          taste: updatedApple.taste,
-          category: updatedApple.category,
-          details: updatedApple.details,
-          photo: updatedApple.photo,
+          image: updatedApple.image,
+          brand: updatedApple.brand,
+          category: updatedApple.type,
+          details: updatedApple.price,
+          photo: updatedApple.description,
+          rating: updatedApple.rating,
         },
       };
 
@@ -286,12 +286,12 @@ async function run() {
       const intel = {
         $set: {
           name: updatedIntel.name,
-          quantity: updatedIntel.quantity,
-          supplier: updatedIntel.supplier,
-          taste: updatedIntel.taste,
-          category: updatedIntel.category,
-          details: updatedIntel.details,
-          photo: updatedIntel.photo,
+          image: updatedIntel.image,
+          brand: updatedIntel.brand,
+          category: updatedIntel.type,
+          details: updatedIntel.price,
+          photo: updatedIntel.description,
+          rating: updatedIntel.rating,
         },
       };
 
@@ -337,12 +337,12 @@ async function run() {
       const samsung = {
         $set: {
           name: updatedSamsung.name,
-          quantity: updatedSamsung.quantity,
-          supplier: updatedSamsung.supplier,
-          taste: updatedSamsung.taste,
-          category: updatedSamsung.category,
-          details: updatedSamsung.details,
-          photo: updatedSamsung.photo,
+          image: updatedSamsung.image,
+          brand: updatedSamsung.brand,
+          category: updatedSamsung.type,
+          details: updatedSamsung.price,
+          photo: updatedSamsung.description,
+          rating: updatedSamsung.rating,
         },
       };
 
@@ -392,12 +392,12 @@ async function run() {
       const sony = {
         $set: {
           name: updatedSony.name,
-          quantity: updatedSony.quantity,
-          supplier: updatedSony.supplier,
-          taste: updatedSony.taste,
-          category: updatedSony.category,
-          details: updatedSony.details,
-          photo: updatedSony.photo,
+          image: updatedSony.image,
+          brand: updatedSony.brand,
+          category: updatedSony.type,
+          details: updatedSony.price,
+          photo: updatedSony.description,
+          rating: updatedSony.rating,
         },
       };
 
